@@ -1,0 +1,52 @@
+{
+  "name": "hieupham0206/yii-cloudteam-app",
+  "description": "Yii 2 Advanced Project Template by Phạm Quang Hiếu",
+  "keywords": [
+    "yii2",
+    "framework",
+    "advanced",
+    "project template",
+    "cloudteam"
+  ],
+  "homepage": "https://github.com/hieupham0206/yii-cloudteam-app",
+  "type": "project",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Phạm Quang Hiếu",
+      "email": "phamquanghieu0206@gmail.com",
+      "homepage": "https://github.com/hieupham0206"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0",
+    "yiisoft/yii2": ">=2.0.6",
+    "yiisoft/yii2-bootstrap": "*",
+    "yiisoft/yii2-swiftmailer": "*",
+    "bower-asset/select2": "^4.0",
+    "phpoffice/phpexcel": "^1.8",
+    "nesbot/carbon": "^1.22",
+    "bower-asset/DataTables": "^1.10",
+    "bower-asset/bootstrap-datepicker": "^1.6",
+    "bower-asset/toastr": "^2.1",
+    "bower-asset/numeral": "^2.0",
+    "bower-asset/highcharts": "^5.0"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "*",
+    "yiisoft/yii2-gii": "*"
+  },
+  "config": {
+    "process-timeout": 1800
+  },
+  "extra": {
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "vendor/bower"
+    }
+  },
+  "scripts": {
+    "post-install-cmd": "php init --env=Development --overwrite=n"
+  }
+}

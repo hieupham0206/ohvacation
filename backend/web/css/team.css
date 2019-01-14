@@ -1,0 +1,67 @@
+.error .select2-selection {
+    border: 1px solid #a94442 !important;
+}
+
+.success .select2-selection {
+    border: 1px solid #3c763d !important;
+}
+
+.error {
+    border: 1px solid #a94442 !important;
+    box-shadow: none;
+}
+
+.success {
+    border: 1px solid #3c763d !important;
+    box-shadow: none;
+}
+
+.detail-title {
+    border-top: 1px solid #e5e5e5;
+    padding: 15px 0;
+}
+
+.select2-container .select2-selection--single {
+    height: 34px !important;
+}
+
+.form-control {
+    width: 100% !important;
+}
+
+.btn > i {
+    vertical-align: middle;
+}
+
+.search-form {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/*DATATABLE*/
+
+div.DTFC_Blocker {
+    background-color: white !important;
+}
+
+.DTFC_RightBodyLiner {
+    overflow-x: hidden;
+}
+
+.dataTables_wrapper .DTFC_ScrollWrapper {
+    margin-bottom: 5px;
+}
+
+.dataTables_scrollBody {
+    margin-bottom: 5px;
+}
+
+table.dataTable tbody td {
+    vertical-align: middle;
+}
+
+tr.selected {
+    background-color: rgba(176, 190, 217, 0.83) !important;
+}
+
+/******/

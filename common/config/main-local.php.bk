@@ -1,0 +1,31 @@
+<?php
+use yii\db\Connection;
+use yii\swiftmailer\Mailer;
+
+return [
+    'components' => [
+        'db'     => [
+            'class'             => Connection::class,
+            'dsn'               => 'mysql:host=localhost;dbname=ohvacation',
+            'username'          => 'ohvacation',
+            'password'          => 'ohvacation@@CoCobay',
+            'charset'           => 'utf8',
+//            'enableSchemaCache' => true,
+//            'enableQueryCache'  => true,
+        ],
+        'mailer' => [
+            'class'            => Mailer::class,
+            'viewPath'         => '@common/mail',
+            'useFileTransport' => false,
+            'transport'        => [
+                'class'      => \Swift_SmtpTransport::class,
+                'host'       => 'smtp.gmail.com',
+                'username'   => 'hexyclone@gmail.com',
+                'password'   => 'hexy0206',
+                'port'       => 465,
+                'encryption' => 'ssl',
+                'timeout'    => 2000 //in second
+            ],
+        ],
+    ],
+];

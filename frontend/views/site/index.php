@@ -64,7 +64,7 @@ $this->title = 'OHVacation - Đặt phòng';
                     <div class="col-xs-12 col-sm-6 col-5 col-info-voucher">
                         <?= $form->field($customer, 'code')->textInput(['class' => 'form-control alphanum', 'autocomplete' => 'off', 'id' => 'txt_code']) ?>
                         <p class="text-info-voucher">
-                            <?= Yii::t('yii', 'Write the red number printed on the voucher') ?>
+                            <?= Yii::t('yii', 'Write the number printed on the voucher') ?>
                         </p>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-5 col-info-voucher">

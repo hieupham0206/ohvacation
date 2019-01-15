@@ -155,12 +155,13 @@ $customs  = [
     'Adult'                                                                                     => 'Người lớn',
     'Child'                                                                                     => 'Trẻ em',
     'Total customer'                                                                            => 'Tổng số khách',
-    'Write the red number printed on the voucher'                                               => 'Ghi chữ số màu đỏ in trên voucher',
-    'Few room'                                               => 'Phòng còn ít',
-    'Medium room'                                               => 'Sắp hết phòng',
-    'A lot room'                                               => 'Phòng còn nhiều',
-    'Phone'                                               => 'Số điện thoại',
-    'If you are the owner, please contact Hotline numbers' => 'Nếu Quý khách là Chủ Sở Hữu xin vui lòng liên hệ số Hotline'
+    'Write the number printed on the voucher'                                                   => 'ID in trên mặt trước voucher',
+    'Write ID Voucher printed on the bottom right corner of Voucher'                            => 'Nhập ID Voucher in phía dưới góc phải Voucher',
+    'Few room'                                                                                  => 'Phòng còn ít',
+    'Medium room'                                                                               => 'Sắp hết phòng',
+    'A lot room'                                                                                => 'Phòng còn nhiều',
+    'Phone'                                                                                     => 'Số điện thoại',
+    'If you are the owner, please contact Hotline numbers'                                      => 'Nếu Quý khách là Chủ Sở Hữu xin vui lòng liên hệ số Hotline',
 ];
 $defaults = [
     'Method Not Allowed'                                                                                                            => 'Phương thức không được phép',
@@ -262,4 +263,5 @@ $defaults = [
     'List {model}'                                                                                                                  => 'Danh sách {model}',
 
 ];
+
 return array_merge($defaults, $numbers, $customs, $dates);

@@ -283,13 +283,13 @@ $this->title = Yii::t('yii', 'Choose payment method');
             let roomPrice = parseInt($('#txt_room_price').val())
 
             if ($(this).val() == 0 && $(this).is(':checked')) {
-                $.ajax({
-                    url: '<?= Url::to(['choose-payment-option']) ?>',
-                    success: function(result) {
-                        $('#myModal .modal-content .modal-body').html(result);
-                        modal.style.display = 'block';
-                    }
-                });
+                //$.ajax({
+                //    url: '<?//= Url::to(['choose-payment-option']) ?>//',
+                //    success: function(result) {
+                //        $('#myModal .modal-content .modal-body').html(result);
+                //        modal.style.display = 'block';
+                //    }
+                //});
                 charge = 2200 + (roomPrice * 0.012);
                 amount = roomPrice + charge;
             } else {

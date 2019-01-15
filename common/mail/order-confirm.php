@@ -56,9 +56,11 @@
                 <p style="font-weight: bold;">Lưu ý:</p>
                 <div style="padding-left: 30px;">
                     <ul class="b" style="list-style-type: square;">
-                        <li>Chi phí trên đã bao gồm giá trị lưu trú 03 ngày 02 đêm nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà
-                            Nẵng;
-                        </li>
+                        <?php if ($voucherType == 1): ?>
+                            <li>Chi phí trên đã bao gồm giá trị lưu trú 03 ngày 02 đêm nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà Nẵng;</li>
+                        <?php else: ?>
+                            <li>Chi phí trên đã bao gồm giá trị lưu trú 04 ngày 03 đêm nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà Nẵng;</li>
+                        <?php endif ?>
                         <li>Không bao gồm vé máy bay, chi phí đi lại, ăn uống và các chi phí cá nhân phát sinh khác;</li>
                         <li>Phí đặt phòng không được hoàn lại trong bất kỳ trường hợp nào.</li>
                         <li>Quý khách vui lòng mang theo Phiếu quà tặng (Gift voucher), email xác nhận đặt phòng, CMND/ Hộ chiếu (người lớn) và Giấy khai sinh/ Hộ chiếu (nếu có trẻ em đi kèm) để làm thủ tục khi nhận phòng.</li>

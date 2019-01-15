@@ -577,6 +577,10 @@ class SiteController extends Controller
         } else {
             $checkOut = '';
         }
+        //note: code loại voucher mới
+        $voucherCode = Yii::$app->session->get('voucher_code');
+        $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
+
         $mail = new Mail([
             'subject' => 'Xác nhận thanh toán',
             'mailTo'  => $customer->email,
@@ -589,6 +593,7 @@ class SiteController extends Controller
             'confimationNumber' => $order->id,
             'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
             'departureDate'     => $checkOut,
+            'voucherType'       => $voucher->voucher_type,
             'note'              => $payment->getTotalCustomer(),
         ]);
         if (Yii::$app->language == 'vi') {
@@ -596,10 +601,10 @@ class SiteController extends Controller
         } else {
             $transStatus = "Your reservation code <span style='color: red'>{$order->code}</span> has been successfully paid. Please bring this voucher for check-in.";
         }
-        $paymentResult = new PaymentResult();
+
+        $paymentResult                = new PaymentResult();
         $paymentResult->transStatus   = $transStatus;
         $paymentResult->transactionNo = $transactionFake;
-        $paymentResult->orderInfo     = $orderCode;
 
         return $this->render('payment_result', ['paymentResult' => $paymentResult]);
     }
@@ -705,6 +710,10 @@ class SiteController extends Controller
                         } else {
                             $checkOut = '';
                         }
+                        //note: code loại voucher mới
+                        $voucherCode = Yii::$app->session->get('voucher_code');
+                        $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
+
                         $mail = new Mail([
                             'subject' => 'Xác nhận thanh toán',
                             'mailTo'  => $customer->email,
@@ -717,6 +726,7 @@ class SiteController extends Controller
                             'confimationNumber' => $order->id,
                             'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
                             'departureDate'     => $checkOut,
+                            'voucherType'       => $voucher->voucher_type,
                             'note'              => $payment->getTotalCustomer(),
                         ]);
                         if (Yii::$app->language == 'vi') {
@@ -886,6 +896,10 @@ class SiteController extends Controller
                             } else {
                                 $checkOut = '';
                             }
+                            //note: code loại voucher mới
+                            $voucherCode = Yii::$app->session->get('voucher_code');
+                            $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
+
                             $mail = new Mail([
                                 'subject' => 'Xác nhận thanh toán',
                                 'mailTo'  => $customer->email,
@@ -898,6 +912,7 @@ class SiteController extends Controller
                                 'confimationNumber' => $order->id,
                                 'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
                                 'departureDate'     => $checkOut,
+                                'voucherType'       => $voucher->voucher_type,
                                 'note'              => $payment->getTotalCustomer(),
                             ]);
                             if (Yii::$app->language == 'vi') {
@@ -1049,17 +1064,18 @@ class SiteController extends Controller
     public function actionSetup()
     {
         Yii::$app->cache->set('abc', 'test');
-//        $payments = Payment::find()->where('date_sub(now(), INTERVAL 15 MINUTE)')->andWhere([
-//            'or',
-//            ['response_code' => null],
-//            ['modified_date' => null]
-//        ])->all();
-//
-//        $orderIds     = ArrayHelper::getColumn($payments, 'orders_id');
-//        var_dump($payments);
-//        var_dump($orderIds);die;
         Yii::$app->session->set('voucher_code', '0028013');
         Yii::$app->session->set('voucherId', 44455);//test
+        Yii::$app->session->set('customerId', 9679);//test
+        Yii::$app->session->set('customerName', 'Quang Hieu');//test
+        Yii::$app->session->set('customerPhone', '01682405889');//test
+    }
+
+    public function actionSetupOld()
+    {
+        Yii::$app->cache->set('abc', 'test');
+        Yii::$app->session->set('voucher_code', '0028012');
+        Yii::$app->session->set('voucherId', 44454);//test
         Yii::$app->session->set('customerId', 9679);//test
         Yii::$app->session->set('customerName', 'Quang Hieu');//test
         Yii::$app->session->set('customerPhone', '01682405889');//test

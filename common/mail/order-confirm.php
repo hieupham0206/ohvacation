@@ -56,11 +56,7 @@
                 <p style="font-weight: bold;">Lưu ý:</p>
                 <div style="padding-left: 30px;">
                     <ul class="b" style="list-style-type: square;">
-                        <?php if ($voucherType == 1): ?>
-                            <li>Chi phí trên đã bao gồm giá trị lưu trú 03 ngày 02 đêm nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà Nẵng;</li>
-                        <?php else: ?>
-                            <li>Chi phí trên đã bao gồm giá trị lưu trú 04 ngày 03 đêm nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà Nẵng;</li>
-                        <?php endif ?>
+                        <li>Chi phí trên đã bao gồm giá trị lưu trú 03 ngày 02 đêm (với loại voucher 03 ngày 02 đêm) hoặc 04 ngày 03 đêm (với loại voucher 04 ngày 03 đêm ) nghỉ dưỡng tại Boutique Hotel thuộc Cocobay Đà Nẵng; </li>
                         <li>Không bao gồm vé máy bay, chi phí đi lại, ăn uống và các chi phí cá nhân phát sinh khác;</li>
                         <li>Phí đặt phòng không được hoàn lại trong bất kỳ trường hợp nào.</li>
                         <li>Quý khách vui lòng mang theo Phiếu quà tặng (Gift voucher), email xác nhận đặt phòng, CMND/ Hộ chiếu (người lớn) và Giấy khai sinh/ Hộ chiếu (nếu có trẻ em đi kèm) để làm thủ tục khi nhận phòng.</li>
@@ -82,19 +78,11 @@
             <p style="font-weight: bold;">Phụ thu ăn sáng nếu có nhu cầu:</p>
             <table border="1" cellspacing="0" cellpadding="5" style="width: 100%">
                 <tr>
-                    <td colspan="2" style="text-align: center; font-weight: bold;">Người lớn</td>
-                    <td colspan="2" style="text-align: center; font-weight: bold;">Trẻ em từ 4 -12 tuổi</td>
+                    <td style="text-align: center; font-weight: bold;">Người lớn</td>
+                    <td style="text-align: center; font-weight: bold;">Trẻ em từ 4 -12 tuổi</td>
                 </tr>
                 <tr>
-                    <td style="text-align: center; font-weight: bold;">Đặt trước tối thiểu 3 ngày</td>
-                    <td style="text-align: center; font-weight: bold;">Đặt tại khách sạn</td>
-                    <td style="text-align: center; font-weight: bold;">Đặt trước tối thiểu 3 ngày</td>
-                    <td style="text-align: center; font-weight: bold;">Đặt tại khách sạn</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;">VND 150.000 net/người/suất</td>
                     <td style="text-align: center;">VND 185.000 net/người/suất</td>
-                    <td style="text-align: center;">VND 75.000 net/trẻ/suất</td>
                     <td style="text-align: center;">VND 93.000 net/trẻ/suất</td>
                 </tr>
             </table>

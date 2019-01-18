@@ -840,6 +840,12 @@ class SiteController extends Controller
      */
     public function actionPaymentResult()
     {
+        Yii::error(json_encode([
+            Yii::$app->request->post(),
+            Yii::$app->request->method,
+            Yii::$app->request,
+        ]));
+
         try {
             if (Yii::$app->request->isPost) {
                 // Define Variables

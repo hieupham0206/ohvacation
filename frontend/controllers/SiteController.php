@@ -979,7 +979,7 @@ class SiteController extends Controller
                 /** @var Customer $customer */
                 $customer = Customer::find()->where(['id' => $customerId])->one();
                 /** @var Payment $payment */
-                $payment = Payment::find()->where(['order_id' => $order->id])->one();
+                $payment = Payment::find()->where(['orders_id' => $order->id])->one();
                 //nếu trang thanh toán chấp nhận giao dịch
                 if ($decision == 'ACCEPT') {
                     //nếu thanh toán thành công

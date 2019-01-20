@@ -838,7 +838,7 @@ class SiteController extends Controller
      * @return string
      * @throws \yii\base\InvalidParamException
      */
-    public function actionPaymentResult()
+    public function actionPaymentResultWs()
     {
         Yii::error(json_encode([
             Yii::$app->request->post(),
@@ -959,7 +959,7 @@ class SiteController extends Controller
         }
     }
 
-    public function actionPaymentResultWs()
+    public function actionPaymentResult()
     {
         try {
             if (Yii::$app->request->isPost) {

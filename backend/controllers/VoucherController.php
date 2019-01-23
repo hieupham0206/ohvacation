@@ -350,6 +350,10 @@ class VoucherController extends Controller
                     $email      = $activeSheetData[$i]['G'];
                     $surveyCode = $activeSheetData[$i]['I'];
 
+                    if (substr($phone, 0, 1) !== '0') {
+                        $phone = "0$phone";
+                    }
+
                     $datas[] = [
                         $clientName,
                         $companion,

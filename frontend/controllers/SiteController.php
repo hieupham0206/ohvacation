@@ -241,14 +241,18 @@ class SiteController extends Controller
                     }
                 }
             }
+
             $date    = date('d.m.Y');
             $dateOut = date('d-m-Y', strtotime('+7 days', strtotime($date)));
 
             /** @var Inventory[] $datas */
             $datesDisabled = TimeHelper::getDatesFromRange($date, $dateOut, 'd-m-Y');
 
+            $datePasts  = ArrayHelper::getColumn(ArrayHelper::_filter($roomInStocks, function ($data) {
+                return $data['stay_date'] < time();
+            }), 'stay_date');
             $dateBlue   = ArrayHelper::getColumn(ArrayHelper::_filter($roomInStocks, function ($data) {
-                return $data['percent'] > 50;
+                return $data['percent'] > 50 && $data['stay_date'] >= time();
             }), 'stay_date');
             $dateYellow = ArrayHelper::getColumn(ArrayHelper::_filter($roomInStocks, function ($data) {
                 return $data['percent'] <= 50 && $data['percent'] >= 20;
@@ -263,6 +267,7 @@ class SiteController extends Controller
                 'reds'          => Json::encode($dateRed),
                 'yellows'       => Json::encode($dateYellow),
                 'blues'         => Json::encode($dateBlue),
+                'datePasts'     => Json::encode($datePasts),
                 'datesDisabled' => $datesDisabled,
             ]);
         }

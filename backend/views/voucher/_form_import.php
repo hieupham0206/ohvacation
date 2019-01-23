@@ -19,12 +19,12 @@
 			</div>
 		</div>
 	</div>
-<!--	<div class="row form-group">-->
-<!--		<div class="col-md-12">-->
-<!--			<div class="col-md-4"><label for="">Excel template</label></div>-->
-<!--            <div class="col-md-6"><a download href="--><?php //Yii::getAlias( '@web' ) . '/template/customer.xlsx' ?><!--" class="btn btn-primary">Download Excel Template</a></div>-->
-<!--		</div>-->
-<!--	</div>-->
+	<div class="row form-group">
+		<div class="col-md-12">
+			<div class="col-md-4"><label for="">Excel template</label></div>
+            <div class="col-md-6"><a download href="<?= Yii::getAlias( '@web' ) . '/Import_template.xlsx' ?>" class="btn btn-primary">Download Excel Template</a></div>
+		</div>
+	</div>
 </div>
 <div class="modal-footer">
 	<button data-bb-handler="cancel" data-dismiss="modal" type="button" class="btn btn-default">Đóng</button>

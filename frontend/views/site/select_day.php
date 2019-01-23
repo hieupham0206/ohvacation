@@ -159,6 +159,8 @@ $this->title = Yii::t('yii', 'Choose Date');
 //            'sort': false,
 //            'info': false
 //        });
+        let datePast = JSON.parse('<?= $datePasts ?>');
+        let datePasts = $.map(datePast, function(el) { return parseInt(el); });
         let red = JSON.parse('<?= $reds ?>');
         let reds = $.map(red, function(el) { return parseInt(el); });
         let yellow = JSON.parse('<?= $yellows ?>');
@@ -177,12 +179,15 @@ $this->title = Yii::t('yii', 'Choose Date');
             beforeShowDay: function(date) {
                 let curDate = moment(date).unix();
                 if ($.inArray(curDate, yellows) !== -1) {
-                    return 'yellow';
+                    return 'bg-yellow';
                 }
                 if ($.inArray(curDate, blues) !== -1) {
-                    return 'blue';
+                    return 'bg-blue';
                 }
                 if ($.inArray(curDate, reds) !== -1) {
+                    return 'bg-red';
+                }
+                if ($.inArray(curDate, datePasts) !== -1) {
                     return 'red';
                 }
             }
@@ -296,5 +301,23 @@ $this->title = Yii::t('yii', 'Choose Date');
     .datepicker-days .red:not(.disabled):not(.new):not(.old) {
         color: red;
         border: solid 1px red;
+    }
+
+    .datepicker-days .bg-yellow:not(.disabled):not(.new):not(.old) {
+        background: gold;
+        color: white;
+        border: solid 1px white;
+    }
+
+    .datepicker-days .bg-blue:not(.disabled):not(.new):not(.old) {
+        background: blue;
+        color: white;
+        border: solid 1px white;
+    }
+
+    .datepicker-days .bg-red:not(.disabled):not(.new):not(.old) {
+        background: red;
+        color: white;
+        border: solid 1px white;
     }
 </style>

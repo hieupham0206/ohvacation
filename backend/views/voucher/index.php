@@ -81,20 +81,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         'type': 'error',
                         'title': '<strong>No file!!!</strong>'
                     });
-                } else {
-                    if (result == 'success') {
-                        body.noti({
-                            'type': 'success',
-                            'title': '<strong>Success!!!</strong>'
-                        });
-                        tableVoucher.clearPipeline().draw();
-                    } else {
-                        body.noti({
-                            'type': 'error',
-                            'title': '<strong>Failed!!!</strong>'
-                        });
-                    }
-                }
+                } else if (result == 'duplicate') {
+					body.noti({
+						'type': 'error',
+						'title': '<strong>File import có voucher trùng, vui lòng kiểm tra lại!!!</strong>'
+					});
+					tableVoucher.clearPipeline().draw();
+				} else if (result == 'success') {
+					body.noti({
+						'type': 'success',
+						'title': '<strong>Success!!!</strong>'
+					});
+					tableVoucher.clearPipeline().draw();
+				} else {
+					body.noti({
+						'type': 'error',
+						'title': '<strong>Failed!!!</strong>'
+					});
+				}
             });
         });
 	});

@@ -206,7 +206,7 @@ $this->title = Yii::t('yii', 'Choose Date');
                         return false;
                     }
                     if (datas == 'rechoose_date') {
-                        alert('Vui lòng chọn lại sau 7 ngày');
+                        alert('Phòng Quý khách đặt không trống tại thời điểm này. Vui lòng chọn tối thiểu sau 7 ngày kể từ ngày hôm nay.');
                         $('#txt_date_out').val('');
                         $('#txt_date_in').val('');
                         roomIds = [];

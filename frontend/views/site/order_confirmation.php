@@ -65,8 +65,8 @@ $this->title = Yii::t('yii', 'Order Confirmation');
             <!-- <label><?php // Yii::t('yii', 'Hi') ?>: <?= $customerName ?></label><br> -->
             <div class="table_left">
                 <?php if ($paymentType == 1): ?>
-                    <form id="payment_confirmation" action="<?= \frontend\models\Cybersource::PAYMENT_URL ?>" method="post">
-<!--                    <form id="payment_confirmation" action="--><?//= Url::to(['site/fake-result']) ?><!--" method="post">-->
+<!--                    <form id="payment_confirmation" action="--><?//= \frontend\models\Cybersource::PAYMENT_URL ?><!--" method="post">-->
+                    <form id="payment_confirmation" action="<?= Url::to(['site/fake-result']) ?>" method="post">
                         <input type="hidden" name="access_key" value="<?= \frontend\models\Cybersource::ACCESS_KEY ?>">
                         <input type="hidden" name="profile_id" value="<?= \frontend\models\Cybersource::PROFILE_ID ?>">
                         <input type="hidden" name="transaction_uuid" value="<?= $cybersourceParams['transaction_uuid'] ?>">
@@ -118,7 +118,7 @@ $this->title = Yii::t('yii', 'Order Confirmation');
                             <button type="button" class="btn-prev btn_ov"><?= Yii::t('yii', 'Cancel') ?></button>
                         </div>
                         <div class="right-agileits">
-                            <button type="submit" class="btn_ov" id="btn_confirm_room"><?= Yii::t('yii', 'Pay') ?></button>
+                            <button type="submit" class="btn_ov btn-confirm-payment" id="btn_confirm_room"><?= Yii::t('yii', 'Pay') ?></button>
                         </div>
                         <!-- <label style="padding: 0px 0px 0px 0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
                     </form>
@@ -144,7 +144,7 @@ $this->title = Yii::t('yii', 'Order Confirmation');
                         <button type="button" class="btn-prev btn_ov"><?= Yii::t('yii', 'Cancel') ?></button>
                     </div>
                     <div class="right-agileits">
-                        <button type="button" class="btn_ov" id="btn_confirm_domestic"><?= Yii::t('yii', 'Pay') ?></button>
+                        <button type="button" class="btn_ov btn-confirm-payment" id="btn_confirm_domestic"><?= Yii::t('yii', 'Pay') ?></button>
                     </div>
                 <?php endif ?>
             </div>
@@ -274,6 +274,10 @@ $this->title = Yii::t('yii', 'Order Confirmation');
                     modal.style.display = 'block';
                 }
             });
+        });
+        $('.btn-confirm-payment').on('click', function() {
+			$.blockUI();
+            // $(this).prop('disabled', true)
         });
 
         /* js ngôn ngữ */

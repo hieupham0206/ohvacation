@@ -65,8 +65,8 @@ $this->title = Yii::t('yii', 'Order Confirmation');
             <!-- <label><?php // Yii::t('yii', 'Hi') ?>: <?= $customerName ?></label><br> -->
             <div class="table_left">
                 <?php if ($paymentType == 1): ?>
-<!--                    <form id="payment_confirmation" action="--><?//= \frontend\models\Cybersource::PAYMENT_URL ?><!--" method="post">-->
-                    <form id="payment_confirmation" action="<?= Url::to(['site/fake-result']) ?>" method="post">
+                    <form id="payment_confirmation" action="<?= \frontend\models\Cybersource::PAYMENT_URL ?>" method="post">
+<!--                    <form id="payment_confirmation" action="--><?//= Url::to(['site/fake-result']) ?><!--" method="post">-->
                         <input type="hidden" name="access_key" value="<?= \frontend\models\Cybersource::ACCESS_KEY ?>">
                         <input type="hidden" name="profile_id" value="<?= \frontend\models\Cybersource::PROFILE_ID ?>">
                         <input type="hidden" name="transaction_uuid" value="<?= $cybersourceParams['transaction_uuid'] ?>">
@@ -256,8 +256,8 @@ $this->title = Yii::t('yii', 'Order Confirmation');
             let orderId = $('#txt_order_id').val()
             modal.style.display = 'none';
             $.blockUI();
-            //$.post('<?//= Url::to(['domestic-payment']) ?>//', {paymentOption: paymentOption}, function(result) {
-            $.post('<?= Url::to(['site/fake-result']) ?>', {paymentOption: paymentOption, orderCode: orderCode, orderId: orderId}, function(result) {
+            $.post('<?= Url::to(['domestic-payment']) ?>', {paymentOption: paymentOption}, function(result) {
+            //$.post('<?//= Url::to(['site/fake-result']) ?>//', {paymentOption: paymentOption, orderCode: orderCode, orderId: orderId}, function(result) {
                 if (result.indexOf('http') > -1) {
                     location.href = result;
                 } else {

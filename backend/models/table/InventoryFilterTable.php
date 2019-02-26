@@ -63,8 +63,10 @@ class InventoryFilterTable extends DataTable
 //                ' <button title="Mở ngày" data-date="'.$model['stay_date'].'" class="btn btn-success btn-open-date"><i class=\'glyphicon glyphicon-check\'></i> </button>'
             ];
         }
-        var_dump($models);die;
-        Yii::$app->cache->set( 'filterTable', $dataArray);
+//        var_dump($models);
+//        die;
+        Yii::$app->cache->set('filterTable', $dataArray);
+
         return $dataArray;
     }
 
@@ -79,12 +81,18 @@ class InventoryFilterTable extends DataTable
      */
     public function getModels($stayDate = null)
     {
-        $status = $this->filterDatas['status'];
+        $status       = $this->filterDatas['status'];
+        $soldDateFrom = $this->filterDatas['sold_date_from'] != '' ? Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['sold_date_from'])) : '';
+        $soldeDateTo  = $this->filterDatas['sold_date_to'] != '' ? Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['sold_date_to'])) : '';
+
+        $stayDateFrom = $this->filterDatas['stay_date_from'] != '' ? Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['stay_date_from'])) : '';
+        $stayDateTo   = $this->filterDatas['stay_date_to'] != '' ? Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['stay_date_to'])) : '';
+
         $models = Inventory::find()->andFilterWhere([
             'and',
 //            ['stay_date' => \Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['stay_date']))],
-            ['between', 'sold_date', Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['sold_date_from'])), Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['sold_date_to']))],
-            ['between', 'stay_date', Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['stay_date_from'])), Yii::$app->formatter->asTimestamp(str_replace('/', '-', $this->filterDatas['stay_date_to']))]
+            ['between', 'sold_date', $soldDateFrom, $soldeDateTo],
+            ['between', 'stay_date', $stayDateFrom, $stayDateTo],
         ])->distinct();
         if ($status == -1) {
             $models = $models->andFilterWhere(['inventory.status' => 0]);
@@ -96,7 +104,7 @@ class InventoryFilterTable extends DataTable
             $models = $models->joinWith([
                 'ordersDetails' => function (ActiveQuery $q) {
                     $q->joinWith(['orders'])->where(['payment_status' => [0, 1]]);
-                }
+                },
             ])->andFilterWhere([
                 'and',
                 ['like', 'orders.code', trim($this->filterDatas['order_code'])],
@@ -117,17 +125,16 @@ class InventoryFilterTable extends DataTable
                              ->offset($this->start)
                              ->orderBy(['stay_date' => $this->direction])
                              ->groupBy('DATE(from_unixtime(stay_date))')
-//                             ->select('stay_date, count(*) as total')->createCommand()->queryAll();
-                             ->select('stay_date, count(*) as total')->createCommand()->getRawSql();
-            
-            var_dump($models, $stayDate, $this->filterDatas);die;
+                             ->select('stay_date, count(*) as total')->createCommand()->queryAll();
+//                             ->select('stay_date, count(*) as total')->createCommand()->getRawSql();
         } else {
 
-            var_dump($models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)
-                            ->offset($this->start)
-                            ->orderBy(['stay_date' => $this->direction])
-                            ->groupBy('inventory_status')
-                            ->select('DATE(from_unixtime(stay_date)), inventory_status, count(*) AS total')->createCommand()->getRawSql());
+//            var_dump($models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)
+//                            ->offset($this->start)
+//                            ->orderBy(['stay_date' => $this->direction])
+//                            ->groupBy('inventory_status')
+//                            ->select('DATE(from_unixtime(stay_date)), inventory_status, count(*) AS total')->createCommand()->getRawSql());
+
             $models = $models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)
                              ->offset($this->start)
                              ->orderBy(['stay_date' => $this->direction])

@@ -34,7 +34,6 @@ class InventoryFilterTable extends DataTable
     {
         $models    = $this->getModels();
         $dataArray = [];
-//        var_dump($models);die;
         foreach ($models as $model) {
 //            $details = Yii::$app->db->createCommand(" SELECT DATE(from_unixtime(stay_date)),
 //  inventory_status,
@@ -64,6 +63,7 @@ class InventoryFilterTable extends DataTable
 //                ' <button title="Mở ngày" data-date="'.$model['stay_date'].'" class="btn btn-success btn-open-date"><i class=\'glyphicon glyphicon-check\'></i> </button>'
             ];
         }
+        var_dump($models);die;
         Yii::$app->cache->set( 'filterTable', $dataArray);
         return $dataArray;
     }
@@ -119,11 +119,19 @@ class InventoryFilterTable extends DataTable
                              ->groupBy('DATE(from_unixtime(stay_date))')
                              ->select('stay_date, count(*) as total')->createCommand()->queryAll();
         } else {
+
+            var_dump($models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)
+                            ->offset($this->start)
+                            ->orderBy(['stay_date' => $this->direction])
+                            ->groupBy('inventory_status')
+                            ->select('DATE(from_unixtime(stay_date)), inventory_status, count(*) AS total')->createCommand()->getRawSql());
             $models = $models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)
                              ->offset($this->start)
                              ->orderBy(['stay_date' => $this->direction])
                              ->groupBy('inventory_status')
                              ->select('DATE(from_unixtime(stay_date)), inventory_status, count(*) AS total')->createCommand()->queryAll();
+//                             ->select('DATE(from_unixtime(stay_date)), inventory_status, count(*) AS total')->createCommand()->getRawSql();
+//            var_dump($models);die;
         }
 
         return $models;

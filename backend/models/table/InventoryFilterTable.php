@@ -117,7 +117,10 @@ class InventoryFilterTable extends DataTable
                              ->offset($this->start)
                              ->orderBy(['stay_date' => $this->direction])
                              ->groupBy('DATE(from_unixtime(stay_date))')
-                             ->select('stay_date, count(*) as total')->createCommand()->queryAll();
+//                             ->select('stay_date, count(*) as total')->createCommand()->queryAll();
+                             ->select('stay_date, count(*) as total')->createCommand()->getRawSql();
+            
+            var_dump($models, $stayDate, $this->filterDatas);die;
         } else {
 
             var_dump($models->andFilterWhere(['stay_date' => $stayDate])->limit($this->length)

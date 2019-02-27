@@ -246,7 +246,7 @@ class PaymentController extends Controller {
 					'content' => ''
 				] );
 				$mail->send( [ 'html' => 'order-confirm' ], [
-					'customerName'      => $customer->name,
+					'customerName'      => $payment->customer_name,
 					'orderCode'         => $order->code,
 					'amount'            => $order->total_price,
 					'confimationNumber' => $order->id,

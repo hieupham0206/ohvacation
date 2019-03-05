@@ -76,18 +76,32 @@ $this->params['breadcrumbs'][] = $this->title;
             utils.submitForm("<?= Url::to( [ 'import-voucher' ] ) ?>", formData).then(function (result) {
                 $.unblockUI();
                 $("#modal-md").modal('hide');
-                if (result == 'no_file') {
+                let jsons = JSON.parse(result)
+                let message = jsons['message']
+                if (message == 'no_file') {
                     body.noti({
                         'type': 'error',
                         'title': '<strong>No file!!!</strong>'
                     });
-                } else if (result == 'duplicate') {
+                } else if (message == 'duplicate') {
 					body.noti({
 						'type': 'error',
 						'title': '<strong>File import có voucher trùng, vui lòng kiểm tra lại!!!</strong>'
 					});
 					tableVoucher.clearPipeline().draw();
-				} else if (result == 'success') {
+				} else if (message == 'success_but_duplicate') {
+                	let duplicateText = ''
+					let datas = jsons['datas']
+                	for (let data of datas) {
+						duplicateText += `${data}, `
+					}
+                    console.log(duplicateText, datas)
+					body.noti({
+						'type': 'error',
+						'title': `<strong>Success!!! File import có voucher trùng, vui lòng kiểm tra lại. Code bị trùng ${duplicateText}</strong>`
+					});
+					tableVoucher.clearPipeline().draw();
+				} else if (message == 'success') {
 					body.noti({
 						'type': 'success',
 						'title': '<strong>Success!!!</strong>'

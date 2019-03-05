@@ -101,8 +101,8 @@ class VoucherController extends Controller
      */
     public function actionSave()
     {
-        $voucherId   = Yii::$app->request->post('Voucher')['id'];
-        $voucher     = $voucherId != '' ? $this->findModel($voucherId) : new Voucher();
+        $voucherId = Yii::$app->request->post('Voucher')['id'];
+        $voucher   = $voucherId != '' ? $this->findModel($voucherId) : new Voucher();
 
         if ($voucher->load(Yii::$app->request->post())) {
             $voucher->code = trim($voucher->code);
@@ -333,6 +333,7 @@ class VoucherController extends Controller
 
     public function actionImportVoucher()
     {
+        ini_set('max_execution_time', -1);
         if (isset($_FILES)) {
             $datas       = $codes = [];
             $document    = PHPExcel_IOFactory::load($_FILES['file']['tmp_name']);
@@ -342,15 +343,19 @@ class VoucherController extends Controller
             $activeSheetData = $document->getActiveSheet()->toArray(null, true, true, true);
             $arrayCount      = count($activeSheetData);
             $isDuplicate     = false;
+            $duplicateCodes  = [];
+
+            $voucherCodes = Voucher::find()->where(['status' => 1])->select(['code'])->createCommand()->queryColumn();
 
             for ($i = 3; $i <= $arrayCount; $i++) {
                 $code = trim($activeSheetData[$i]['H']);
                 if (in_array($code, $codes, true)) {
-                    $isDuplicate = true;
-                    break;
+                    $isDuplicate      = true;
+                    $duplicateCodes[] = $code;
+                    continue;
                 }
-                $voucherCode = Voucher::find()->where(['code' => $code, 'status' => 1])->one();
-                if ($code != '' && $voucherCode == null) {
+//                $voucherCode = Voucher::find()->where(['code' => $code, 'status' => 1])->one();
+                if ($code != '' && ! in_array($code, $voucherCodes, true)) {
                     $clientName = $activeSheetData[$i]['D'];
                     $companion  = $activeSheetData[$i]['E'];
                     $phone      = $activeSheetData[$i]['F'];
@@ -376,27 +381,40 @@ class VoucherController extends Controller
                 }
             }
 
-            if ($isDuplicate) {
-                return 'duplicate';
+//            if ($isDuplicate) {
+//                return 'duplicate';
+//            }
+
+            $importRes = Yii::$app->db->createCommand()
+                                      ->batchInsert(Voucher::tableName(), [
+                                          'client_name',
+                                          'companion',
+                                          'phone',
+                                          'email',
+                                          'code',
+                                          'survey_code',
+                                          'created_date',
+                                          'created_by',
+                                          'voucher_type',
+                                      ], $datas)
+                                      ->execute() > 0;
+
+            $message = $importRes ? 'success' : 'fail';
+
+            if ($isDuplicate && $importRes) {
+                $message = 'success_but_duplicate';
             }
 
-            return Yii::$app->db->createCommand()
-                                ->batchInsert(Voucher::tableName(), [
-                                    'client_name',
-                                    'companion',
-                                    'phone',
-                                    'email',
-                                    'code',
-                                    'survey_code',
-                                    'created_date',
-                                    'created_by',
-                                    'voucher_type',
-                                ], $datas)
-                                ->execute() > 0 ? 'success' : 'fail';
-
+            return json_encode([
+                'message' => $message,
+                'datas'   => $duplicateCodes,
+            ]);
         }
 
-        return 'no_file';
+        return json_encode([
+            'message' => 'no_file',
+            'datas'   => [],
+        ]);
     }
 
     public function actionAddNote()

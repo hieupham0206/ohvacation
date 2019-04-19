@@ -572,7 +572,7 @@ class SiteController extends Controller
             'message'          => 'Thanh toán thành công',
         ]);
         /** @var Inventory[] $inventorys */
-        $inventorys = Inventory::find()->orderBy(['inventory.stay_date' => SORT_ASC])->where(['id' => $inventoryIds])->all();
+        $inventorys = Inventory::find()->where( [ 'id' => $inventoryIds ] )->orderBy(['stay_date' => SORT_ASC])->all();
         if (count($inventorys) == 1) {
             $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[0]->stay_date));
             $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
@@ -705,7 +705,7 @@ class SiteController extends Controller
                             'message'          => 'Thanh toán thành công',
                         ]);
                         /** @var Inventory[] $inventorys */
-                        $inventorys = Inventory::find()->orderBy(['inventory.stay_date' => SORT_ASC])->where(['id' => $inventoryIds])->all();
+                        $inventorys = Inventory::find()->where( [ 'id' => $inventoryIds ] )->orderBy(['stay_date' => SORT_ASC])->all();
                         if (count($inventorys) == 1) {
                             $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[0]->stay_date));
                             $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
@@ -715,6 +715,24 @@ class SiteController extends Controller
                         } else {
                             $checkOut = '';
                         }
+
+                        $checkIn = Yii::$app->formatter->asDate($inventorys[0]->stay_date);
+                        if ($checkIn == $checkOut) {
+                            $checkIn  = $inventorys[0]->stay_date;
+                            $checkOut = end($inventorys)->stay_date;
+                            foreach ($inventorys as $inventory) {
+                                if ($checkIn > $inventory->stay_date) {
+                                    $checkIn = $inventory->stay_date;
+                                }
+                                if ($checkOut < $inventory->stay_date) {
+                                    $checkOut = $inventory->stay_date;
+                                }
+                            }
+                            $checkIn  = Yii::$app->formatter->asDate($checkIn);
+                            $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $checkOut));
+                            $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
+                        }
+
                         //note: code loại voucher mới
                         $voucherCode = Yii::$app->session->get('voucher_code');
                         $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
@@ -729,7 +747,7 @@ class SiteController extends Controller
                             'orderCode'         => $orderCode,
                             'amount'            => $order->total_price,
                             'confimationNumber' => $order->id,
-                            'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
+                            'arrivalDate'       => $checkIn,
                             'departureDate'     => $checkOut,
                             'voucherType'       => $voucher->voucher_type,
                             'note'              => $payment->getTotalCustomer(),
@@ -897,7 +915,7 @@ class SiteController extends Controller
                                 'message'          => $message,
                             ]);
                             /** @var Inventory[] $inventorys */
-                            $inventorys = Inventory::find()->orderBy(['inventory.stay_date' => SORT_ASC])->where(['id' => $inventoryIds])->all();
+                            $inventorys = Inventory::find()->where( [ 'id' => $inventoryIds ] )->orderBy(['stay_date' => SORT_ASC])->all();
                             if (count($inventorys) == 1) {
                                 $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[0]->stay_date));
                                 $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
@@ -907,6 +925,24 @@ class SiteController extends Controller
                             } else {
                                 $checkOut = '';
                             }
+
+                            $checkIn = Yii::$app->formatter->asDate($inventorys[0]->stay_date);
+                            if ($checkIn == $checkOut) {
+                                $checkIn  = $inventorys[0]->stay_date;
+                                $checkOut = end($inventorys)->stay_date;
+                                foreach ($inventorys as $inventory) {
+                                    if ($checkIn > $inventory->stay_date) {
+                                        $checkIn = $inventory->stay_date;
+                                    }
+                                    if ($checkOut < $inventory->stay_date) {
+                                        $checkOut = $inventory->stay_date;
+                                    }
+                                }
+                                $checkIn  = Yii::$app->formatter->asDate($checkIn);
+                                $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $checkOut));
+                                $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
+                            }
+
                             //note: code loại voucher mới
                             $voucherCode = Yii::$app->session->get('voucher_code');
                             $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
@@ -921,7 +957,7 @@ class SiteController extends Controller
                                 'orderCode'         => $orderCode,
                                 'amount'            => $order->total_price,
                                 'confimationNumber' => $order->id,
-                                'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
+                                'arrivalDate'       => $checkIn,
                                 'departureDate'     => $checkOut,
                                 'voucherType'       => $voucher->voucher_type,
                                 'note'              => $payment->getTotalCustomer(),
@@ -999,7 +1035,7 @@ class SiteController extends Controller
                                 'message'          => $message,
                             ]);
                             /** @var Inventory[] $inventorys */
-                            $inventorys = Inventory::find()->orderBy(['inventory.stay_date' => SORT_ASC])->where(['id' => $inventoryIds])->all();
+                            $inventorys = Inventory::find()->where( [ 'id' => $inventoryIds ] )->orderBy(['stay_date' => SORT_ASC])->all();
                             if (count($inventorys) == 1) {
                                 $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[0]->stay_date));
                                 $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
@@ -1008,6 +1044,22 @@ class SiteController extends Controller
                                 $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
                             } else {
                                 $checkOut = '';
+                            }
+                            $checkIn = Yii::$app->formatter->asDate($inventorys[0]->stay_date);
+                            if ($checkIn == $checkOut) {
+                                $checkIn  = $inventorys[0]->stay_date;
+                                $checkOut = end($inventorys)->stay_date;
+                                foreach ($inventorys as $inventory) {
+                                    if ($checkIn > $inventory->stay_date) {
+                                        $checkIn = $inventory->stay_date;
+                                    }
+                                    if ($checkOut < $inventory->stay_date) {
+                                        $checkOut = $inventory->stay_date;
+                                    }
+                                }
+                                $checkIn  = Yii::$app->formatter->asDate($checkIn);
+                                $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $checkOut));
+                                $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
                             }
                             $mail = new Mail([
                                 'subject' => 'Xác nhận thanh toán',
@@ -1019,7 +1071,7 @@ class SiteController extends Controller
                                 'orderCode'         => $orderCode,
                                 'amount'            => $order->total_price,
                                 'confimationNumber' => $order->id,
-                                'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
+                                'arrivalDate'       => $checkIn,
                                 'departureDate'     => $checkOut,
                                 'note'              => $payment->getTotalCustomer(),
                             ]);

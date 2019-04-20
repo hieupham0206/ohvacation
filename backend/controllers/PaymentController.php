@@ -584,7 +584,7 @@ class PaymentController extends Controller
 
                 $inventoryIds = OrdersDetail::find()->where(['orders_id' => $paymentData->orders_id])->select(['inventory_id'])->createCommand()->queryColumn();
                 /** @var Inventory[] $inventorys */
-                $inventorys = Inventory::find()->where(['id' => $inventoryIds])->all();
+                $inventorys = Inventory::find()->where(['id' => $inventoryIds])->orderBy(['stay_date' => SORT_ASC])->all();
                 if ($filterDateIn == $inventorys[0]->stay_date) {
                     $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[count($inventorys) - 1]->stay_date));
                     $checkOut = strtotime($dateIn);
@@ -623,7 +623,8 @@ class PaymentController extends Controller
 
                 $inventoryIds = OrdersDetail::find()->where(['orders_id' => $paymentData->orders_id])->select(['inventory_id'])->createCommand()->queryColumn();
                 /** @var Inventory[] $inventorys */
-                $inventorys = Inventory::find()->where(['id' => $inventoryIds])->all();
+                $inventorys = Inventory::find()->where(['id' => $inventoryIds])->orderBy(['stay_date' => SORT_ASC])->all();
+
                 $dateIn     = date('d.m.Y H:i:s', strtotime('+1 day', $inventorys[count($inventorys) - 1]->stay_date));
                 $checkOut   = strtotime($dateIn);
                 $adults     = $customers = explode(',', $paymentData->customer_note)[0];

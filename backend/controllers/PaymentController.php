@@ -329,6 +329,22 @@ class PaymentController extends Controller
         } else {
             $checkOut = '';
         }
+        $checkIn = Yii::$app->formatter->asDate($inventorys[0]->stay_date);
+        if ($checkIn === $checkOut) {
+            $checkIn  = $inventorys[0]->stay_date;
+            $checkOut = end($inventorys)->stay_date;
+            foreach ($inventorys as $inventory) {
+                if ($checkIn > $inventory->stay_date) {
+                    $checkIn = $inventory->stay_date;
+                }
+                if ($checkOut < $inventory->stay_date) {
+                    $checkOut = $inventory->stay_date;
+                }
+            }
+            $checkIn  = Yii::$app->formatter->asDate($checkIn);
+            $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $checkOut));
+            $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
+        }
         /** @var Payment $payment */
         $payment = Payment::find()->where(['orders_id' => $order->id])->one();
         $mail    = new Mail([
@@ -342,7 +358,7 @@ class PaymentController extends Controller
             'orderCode'         => $order->code,
             'amount'            => $order->total_price,
             'confimationNumber' => $order->id,
-            'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
+            'arrivalDate'       => $checkIn,
             'departureDate'     => $checkOut,
             'note'              => $payment->getTotalCustomer(),
         ]) ? 'success' : 'fail';
@@ -405,6 +421,22 @@ class PaymentController extends Controller
                 } else {
                     $checkOut = '';
                 }
+                $checkIn = Yii::$app->formatter->asDate($inventorys[0]->stay_date);
+                if ($checkIn === $checkOut) {
+                    $checkIn  = $inventorys[0]->stay_date;
+                    $checkOut = end($inventorys)->stay_date;
+                    foreach ($inventorys as $inventory) {
+                        if ($checkIn > $inventory->stay_date) {
+                            $checkIn = $inventory->stay_date;
+                        }
+                        if ($checkOut < $inventory->stay_date) {
+                            $checkOut = $inventory->stay_date;
+                        }
+                    }
+                    $checkIn  = Yii::$app->formatter->asDate($checkIn);
+                    $dateIn   = date('d.m.Y H:i:s', strtotime('+1 day', $checkOut));
+                    $checkOut = Yii::$app->formatter->asDate(strtotime($dateIn));
+                }
                 $mail = new Mail([
                     'subject' => 'Xác nhận thanh toán',
                     'mailTo'  => $customer->email,
@@ -415,7 +447,7 @@ class PaymentController extends Controller
                     'orderCode'         => $order->code,
                     'amount'            => $order->total_price,
                     'confimationNumber' => $order->id,
-                    'arrivalDate'       => Yii::$app->formatter->asDate($inventorys[0]->stay_date),
+                    'arrivalDate'       => $checkIn,
                     'departureDate'     => $checkOut,
                     'note'              => $payment->getTotalCustomer(),
                 ]);

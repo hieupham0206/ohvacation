@@ -65,7 +65,7 @@ $this->title = Yii::t('yii', 'Choose payment method');
         <div class="login-form form_margin">
             <input type="hidden" id="txt_room_price" value="<?= $roomPrice ?>">
             <div class="class_radio class_radio_top">
-                <input type="radio" id="radio01" name="paymentType" value="0"/>
+                <input type="radio" id="radio01" name="paymentType" value="0" disabled/>
                 <label for="radio01"><span></span><?= Yii::t('yii', 'Domestic payment') ?> (ATM có internet banking)</label>
             </div>
             <div class="class_radio">

@@ -78,7 +78,7 @@ class OrderForm {
 					$detailDatas[] = [
 						$inventory->id,
 						$orderId,
-						650000
+						750000
 					];
 					$inventory->updateAttributes( [
 						'inventory_status' => 2,

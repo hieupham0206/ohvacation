@@ -350,7 +350,7 @@ class SiteController extends Controller
             if ($roomIds != '') {
                 $roomIds = explode(',', $roomIds);
                 if ($voucher->isOldType()) {
-                    $roomPrice = 650000;
+                    $roomPrice = 750000;
                 } else {
                     $roomPrice = 990000;
                 }
@@ -417,7 +417,7 @@ class SiteController extends Controller
             $voucherCode = Yii::$app->session->get('voucher_code');
             $voucher     = Voucher::find()->where(['code' => $voucherCode])->one();
 
-            $roomPrice = 650000;
+            $roomPrice = 750000;
             if ( ! $voucher->isOldType()) {
                 $roomPrice = 990000;
             }
@@ -481,7 +481,7 @@ class SiteController extends Controller
 
                     'line_item_count'   => 2,
                     'item_0_unit_price' => '680000',
-                    'item_1_unit_price' => '650000',
+                    'item_1_unit_price' => '750000',
                     'item_#_quantity'   => '1',
                     'item_0_name'       => 'Phí đặt phòng',
                     'item_1_name'       => 'Phí thanh toán',
